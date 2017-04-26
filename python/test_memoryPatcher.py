@@ -1,11 +1,8 @@
+import struct
+from io import BytesIO
 from unittest import TestCase
 
-from io import BytesIO
-
-import struct
-
-from memory_patcher import MemoryPatcher, Segment, InvalidAddressException, \
-    WriteException
+from memory_patcher import MemoryPatcher, Segment, InvalidAddressException
 
 
 class TestMemoryPatcher(TestCase):
@@ -60,7 +57,8 @@ class TestMemoryPatcher(TestCase):
         upper = m.add_segment(0x10, 0x8)
         self.assertTrue(upper in m.segments)
 
-    def _setup_data_test(self):
+    @staticmethod
+    def _setup_data_test():
         m = MemoryPatcher()
         lower = Segment(0x0, 0x8)
         lower_data = struct.pack('<8B', *range(8))
